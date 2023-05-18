@@ -72,7 +72,7 @@ jobs:
     name: Build Android App
     env:
       source-directory: ./ 
-      example-directory: ./example
+#       example-directory: ./example
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -89,10 +89,10 @@ jobs:
       # Build Android version of the example App
       - name: Run Android build
         run: flutter build apk --release --target-platform=android-arm64 --no-shrink
-        working-directory: ${{env.example-directory}}
+        working-directory: ${{env.source-directory}}
         
       - name: Upload APK
         uses: actions/upload-artifact@v2
         with:
           name: apk
-          path: ${{env.example-directory}}/build/app/outputs/apk/release/app-release.apk
+          path: ${{env.source-directory}}/build/app/outputs/apk/release/app-release.apk
