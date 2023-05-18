@@ -1,0 +1,57 @@
+import 'dart:developer';
+
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:study_riverpod/common/state/auth.dart';
+
+class RouterNotifier extends AutoDisposeAsyncNotifier<void>
+    implements Listenable {
+  VoidCallback? routerListener;
+  bool isAuth = false; // Useful for our global redirect functio
+
+  @override
+  FutureOr<void> build() async {
+    isAuth = await ref.watch(authNotifierProvider.selectAsync(
+        (data) => data.map(signedIn: (_) => true, signedOut: (_) => false)));
+
+    log('isAuth:--$isAuth');
+    ref.listenSelf((previous, next) {
+      if (state.isLoading) return;
+
+      routerListener?.call();
+    });
+    // throw UnimplementedError();
+  }
+
+  /// Redirects the user when our authentication changes
+  String? redirect(BuildContext context, GoRouterState state) {
+    if (this.state.isLoading || this.state.hasError) return null;
+
+    final isSplash = state.location == "/splash_page";
+
+    if (isSplash) {
+      return isAuth ? "/" : "/login_page";
+    }
+
+    final isLoggingIn = state.location == "/login_page";
+    if (isLoggingIn) return isAuth ? "/" : null;
+
+    return isAuth ? null : "/splash_page";
+  }
+
+  @override
+  void addListener(VoidCallback listener) {
+    routerListener = listener;
+  }
+
+  @override
+  void removeListener(VoidCallback listener) {
+    routerListener = null;
+  }
+}
+
+final routerNotifierProvider =
+    AutoDisposeAsyncNotifierProvider<RouterNotifier, void>(() {
+  return RouterNotifier();
+});
