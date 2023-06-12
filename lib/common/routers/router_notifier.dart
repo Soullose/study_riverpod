@@ -25,19 +25,20 @@ class RouterNotifier extends AutoDisposeAsyncNotifier<void>
   }
 
   /// Redirects the user when our authentication changes
-  String? redirect(BuildContext context, GoRouterState state) {
+  Future<String?> redirect(BuildContext context, GoRouterState state) async {
     if (this.state.isLoading || this.state.hasError) return null;
 
     final isSplash = state.location == "/splash_page";
 
     if (isSplash) {
-      return isAuth ? "/" : "/login_page";
+      await Future.delayed(const Duration(seconds: 3));
+      return isAuth ? "/home" : "/login_page";
     }
 
     final isLoggingIn = state.location == "/login_page";
-    if (isLoggingIn) return isAuth ? "/" : null;
+    if (isLoggingIn) return isAuth ? "/home" : null;
 
-    return isAuth ? null : "/splash_page";
+    return isAuth ? null : "/login_page";
   }
 
   @override
