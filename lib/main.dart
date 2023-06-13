@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:study_riverpod/common/provider/shared_preferences_provider.dart';
@@ -35,16 +36,23 @@ class MyApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(routerProvider);
 
-    return MaterialApp.router(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData.light(useMaterial3: true),
-      darkTheme: ThemeData.light(useMaterial3: true),
-      themeMode: ThemeMode.light,
-      // theme: ThemeData(
-      //   primarySwatch: Colors.blue,
-      // ),
-      routerConfig: router,
+    return ScreenUtilInit(
+      designSize: const Size(360, 690),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) {
+        return MaterialApp.router(
+          title: 'Flutter Demo',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData.light(useMaterial3: true),
+          darkTheme: ThemeData.light(useMaterial3: true),
+          themeMode: ThemeMode.light,
+          // theme: ThemeData(
+          //   primarySwatch: Colors.blue,
+          // ),
+          routerConfig: router,
+        );
+      },
     );
   }
 }

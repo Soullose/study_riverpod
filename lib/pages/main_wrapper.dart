@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import 'main_wrapper_state.dart';
+
 class MainWrapperPage extends ConsumerWidget {
   const MainWrapperPage({
     required this.navigationShell,
@@ -19,9 +21,12 @@ class MainWrapperPage extends ConsumerWidget {
           NavigationDestination(icon: Icon(Icons.login_outlined), label: "入库"),
           NavigationDestination(icon: Icon(Icons.logout_outlined), label: "出库"),
         ],
-        selectedIndex: navigationShell.currentIndex,
-        onDestinationSelected: (int index) => navigationShell.goBranch(index,
-            initialLocation: navigationShell.currentIndex == index),
+        selectedIndex: ref.watch(mainWrapperProvider),
+        onDestinationSelected: (int index) {
+          ref.read(mainWrapperProvider.notifier).select(index);
+          return navigationShell.goBranch(index,
+              initialLocation: navigationShell.currentIndex == index);
+        },
       ),
       body: navigationShell,
     );
