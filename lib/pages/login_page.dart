@@ -30,14 +30,12 @@ class LoginPage extends ConsumerWidget {
               //   style: TextStyle(fontSize: 30.sp),
               // ),
               Padding(
-                padding: EdgeInsets.only(top: 40, bottom: 46),
-                child: Container(
-                  child: Center(
-                    child: CircleAvatar(
-                      backgroundColor: Colors.transparent,
-                      radius: 38,
-                      child: SvgPicture.asset('assets/images/user.svg')
-                    ),
+                padding: const EdgeInsets.only(top: 40, bottom: 46),
+                child: Center(
+                  child: CircleAvatar(
+                    backgroundColor: Colors.transparent,
+                    radius: 38,
+                    child: SvgPicture.asset('assets/images/user.svg')
                   ),
                 ),
               ),
