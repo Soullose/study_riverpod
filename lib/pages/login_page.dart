@@ -33,10 +33,9 @@ class LoginPage extends ConsumerWidget {
                 padding: const EdgeInsets.only(top: 40, bottom: 46),
                 child: Center(
                   child: CircleAvatar(
-                    backgroundColor: Colors.transparent,
-                    radius: 38,
-                    child: SvgPicture.asset('assets/images/user.svg')
-                  ),
+                      backgroundColor: Colors.transparent,
+                      radius: 38,
+                      child: SvgPicture.asset('assets/images/user.svg')),
                 ),
               ),
               TextField(
@@ -79,10 +78,10 @@ class LoginPage extends ConsumerWidget {
                     if (kDebugMode) {
                       print('密码:${passwordTextEditingController.text}');
                     }
-                    // ref.watch(authNotifierProvider.notifier).login(
-                    //   "myEmail",
-                    //   "myPassword",
-                    // );
+                    ref.watch(authNotifierProvider.notifier).login(
+                          "myEmail",
+                          "myPassword",
+                        );
                   },
                   style: ButtonStyle(
                     backgroundColor:
