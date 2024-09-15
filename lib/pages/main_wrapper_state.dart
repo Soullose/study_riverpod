@@ -15,4 +15,4 @@ class MainWrapper extends StateNotifier<int> {
 
 // riverpod中MainWrapper的StateNotifierProvider
 final mainWrapperProvider =
-StateNotifierProvider<MainWrapper, int>((ref) => MainWrapper());
+    StateNotifierProvider<MainWrapper, int>((ref) => MainWrapper());
